@@ -7,7 +7,7 @@ from collections import OrderedDict
 exclude = set(string.punctuation)
 import re
 
-#created by : yurdha fadhila
+#author : yurdha fadhila
  
 #stopword
 file_sw=open('tala.txt','r')
