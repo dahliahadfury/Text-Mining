@@ -270,7 +270,7 @@ def posterior(indexTerm, hslLikelihood, hslprior):
         if row not in indexTerms and row is not "null" :
             indexTerms.append(row)
     
-    print(indexTerms)
+    # print(indexTerms)
 
     for row in hslprior:
         if row in result:
@@ -284,14 +284,14 @@ def posterior(indexTerm, hslLikelihood, hslprior):
                 temp *= hslLikelihood[row][int(float(index))]
             result[row] = temp
     
-    print(result)
+    # print(result)
     
     temp3 = []
     for row in result:
         temp3.append(result[row])
 
     temp4 = max(temp3)
-    print(temp4)
+    # print(temp4)
 
     label = ''
 
@@ -302,64 +302,75 @@ def posterior(indexTerm, hslLikelihood, hslprior):
 
     return label
 
+#main menu
+print("Menu : ")
+print("1. data latih 12 sms dengan data uji 6 sms")
+print("2. data latih 18 sms dengan data uji 6 sms")
+print("3. data latih 24 sms dengan data uji 6 sms")
+print("4. data latih 6 sms dengan data uji 1 sms")
+menu = int(input("Masukan pilihan : "))
+datalatih = ''
+datauji = ''
+if menu > 0 and menu < 5 :
+    if menu == 1:
+        datalatih = readMyFile('datalatih12.csv')
+        datauji = readMyFile('datauji6.csv')
+    elif menu == 2:
+        datalatih = readMyFile('datalatih18.csv')
+        datauji = readMyFile('datauji6.csv')
+    elif menu == 3:
+        datalatih = readMyFile('datalatih24.csv')
+        datauji = readMyFile('datauji6.csv')
+    elif menu == 4:
+        datalatih = readMyFile('datauji6.csv')
+        datauji = readMyFile('dataUjiBuatManualisasi.csv')
 
+    #DATA LATIH
+    teks = getTeks(datalatih)
+    token= stemming(stopwordRemoval(lexicalAnalysis(teks)))    
+    print("term")
+    term = getTerm(token)
+    print(term)
+    totalTerm = len(term)    
+    termInDoc = getTermInDoc(datalatih)
+    print("term in doc")
+    print(termInDoc)
+    print("raw")
+    raw = rawWeight(termInDoc,term)
+    print(raw)
+    print("raw dengan kelasnya")
+    raw = getKelasRawData(datalatih, raw)
+    print(raw)
+    totalTermPerKelas = getTotalTermInKelas(raw)
+    print("total term per kelas")
+    print(totalTermPerKelas)
+    print("Raw dengan kelas yang sama")
+    rawPerKelas = getRawPerKelas(raw)
+    print(rawPerKelas)
+    print("likelihood")
+    hasilLikelihood = Likelihood(rawPerKelas, totalTermPerKelas ,totalTerm)
+    print(hasilLikelihood)
 
-
-print("DATA LATIH DEBANYAK 24 SMS")
-datalatih24 = readMyFile('dataset2.csv')
-teks = getTeks(datalatih24)
-token=lexicalAnalysis(teks)
-# print(token)
-token=stopwordRemoval(token)
-# print(token)
-print("hasil stemming")
-token= stemming(token)
-# print(token)
-print("term")
-term = getTerm(token)
-print(term)
-totalTerm = len(term)
-# print(len(term))
-#BARU
-termInDoc = getTermInDoc(datalatih24)
-print("term in doc")
-print(termInDoc)
-print("raw")
-raw = rawWeight(termInDoc,term)
-print(raw)
-print("raw dengan kelasnya")
-raw = getKelasRawData(datalatih24, raw)
-print(raw)
-totalTermPerKelas = getTotalTermInKelas(raw)
-print("total term per kelas")
-print(totalTermPerKelas)
-print("Raw dengan kelas yang sama")
-rawPerKelas = getRawPerKelas(raw)
-print(rawPerKelas)
-print("likelihood")
-hasilLikelihood = Likelihood(rawPerKelas, totalTermPerKelas ,totalTerm)
-print(hasilLikelihood)
-
-#DATA UJI SEBANYAK 6 SMS
-print("DATA UJI SEBANYAK 6 SMS")
-datauji = readMyFile('dataUjiBuatManualisasi.csv')
-termInDocTesting = getTermInDoc(datauji)
-print(termInDocTesting)
-print("PRIOR")
-hasilPrior = prior(datalatih24)
-print(hasilPrior)
-print("FIND MATCH TERM")
-indexMacthTerm = findMatchTerm(termInDocTesting, term)
-print(indexMacthTerm)
-hasilPosterior = []
-for i in range(len(indexMacthTerm)):
-    temp = OrderedDict()
-    temp["nomor sms"] = i
-    temp["label"] = posterior(indexMacthTerm[i], hasilLikelihood, hasilPrior)
-    hasilPosterior.append(temp)
-
-print("hasil klasifikasi")
-print(hasilPosterior)
-print(list(hasilPosterior[0].keys()))
-for data in hasilPosterior:
-	print(list(data.values()))
+    #DATA UJI     
+    termInDocTesting = getTermInDoc(datauji)
+    print(termInDocTesting)
+    print("PRIOR")
+    hasilPrior = prior(datalatih)
+    print(hasilPrior)
+    print("FIND MATCH TERM")
+    indexMacthTerm = findMatchTerm(termInDocTesting, term)
+    print(indexMacthTerm)
+    hasilPosterior = []
+    for i in range(len(indexMacthTerm)):
+        temp = OrderedDict()
+        temp["nomor sms"] = i
+        temp["label"] = posterior(indexMacthTerm[i], hasilLikelihood, hasilPrior)
+        hasilPosterior.append(temp)
+    print("hasil klasifikasi")
+    print(hasilPosterior)
+    print(list(hasilPosterior[0].keys()))
+    for data in hasilPosterior:
+        print(list(data.values()))
+    
+else:
+    print("Pilihan yang dimasukan salah")
