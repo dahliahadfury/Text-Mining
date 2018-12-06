@@ -103,57 +103,6 @@ def getTerm(data):
             term.append(row)
     return term
 
-def data12():
-    #DATA LATIH DEBANYAK 12 SMS
-    print("DATA LATIH DEBANYAK 12 SMS")
-    datalatih12 = readMyFile('datalatih12.csv')
-    teks = getTeks(datalatih12)
-    #print(file)
-    token=lexicalAnalysis(teks)
-    # print(token)
-    token=stopwordRemoval(token)
-    # print(token)
-    # print("hasil stemming")
-    token= stemming(token)
-    # print(token)
-    print("term")
-    term = getTerm(token)
-    print(term)
-
-def data18():
-    #DATA LATIH DEBANYAK 18 SMS
-    print("DATA LATIH DEBANYAK 18 SMS")
-    datalatih18 = readMyFile('datalatih18.csv')
-    teks = getTeks(datalatih18)
-    #print(file)
-    token=lexicalAnalysis(teks)
-    # print(token)
-    token=stopwordRemoval(token)
-    # print(token)
-    # print("hasil stemming")
-    token= stemming(token)
-    # print(token)
-    print("term")
-    term = getTerm(token)
-    print(term)
-
-def data24():
-    #DATA LATIH DEBANYAK 24 SMS
-    print("DATA LATIH DEBANYAK 24 SMS")
-    datalatih24 = readMyFile('datalatih24.csv')
-    teks = getTeks(datalatih24)
-    #print(file)
-    token=lexicalAnalysis(teks)
-    # print(token)
-    token=stopwordRemoval(token)
-    # print(token)
-    # print("hasil stemming")
-    token= stemming(token)
-    # print(token)
-    print("term")
-    term = getTerm(token)
-    print(term)
-
 #term weighting
 def getTermInDoc(dataTeks):
     termInDoc=[]
@@ -302,11 +251,8 @@ def posterior(indexTerm, hslLikelihood, hslprior):
 
     return label
 
-
-
-
 print("DATA LATIH DEBANYAK 24 SMS")
-datalatih24 = readMyFile('datalatih12.csv')
+datalatih24 = readMyFile('datalatih24.csv')
 teks = getTeks(datalatih24)
 token=lexicalAnalysis(teks)
 # print(token)
