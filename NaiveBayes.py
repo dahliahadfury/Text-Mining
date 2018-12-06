@@ -306,7 +306,7 @@ def posterior(indexTerm, hslLikelihood, hslprior):
 
 
 print("DATA LATIH DEBANYAK 24 SMS")
-datalatih24 = readMyFile('datalatih12.csv')
+datalatih24 = readMyFile('dataset2.csv')
 teks = getTeks(datalatih24)
 token=lexicalAnalysis(teks)
 # print(token)
@@ -342,7 +342,7 @@ print(hasilLikelihood)
 
 #DATA UJI SEBANYAK 6 SMS
 print("DATA UJI SEBANYAK 6 SMS")
-datauji = readMyFile('dataset2.csv')
+datauji = readMyFile('dataUjiBuatManualisasi.csv')
 termInDocTesting = getTermInDoc(datauji)
 print(termInDocTesting)
 print("PRIOR")
